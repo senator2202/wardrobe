@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Wardrobe Items</title>
+</head>
+<body>
+
+<div id="itemSection" th:fragment="items"
+     style="display: flex; justify-content: center; flex-direction: row; flex-wrap: wrap">
+    <section th:id="'itemSection' + ${item.id}" th:each="item : ${clothing}" class="product">
+        <div class="product__photo">
+            <div class="photo-container">
+                <div class="photo-main">
+                    <div class="controls">
+                        <span sec:authorize="hasRole('ROLE_ADMIN')" th:id="'editBtn' + ${item.id}" role="button" tabindex="0" class="material-icons"
+                              onclick="editItemModal(this)"
+                              th:attr="data-name=${item.name},data-type=${item.type}, data-price=${item.price}, data-color=${item.color.name}, data-sizes=${item.sizes}, data-imagesources=${item.imageSources}">edit</span>
+                        <span sec:authorize="hasRole('ROLE_ADMIN')" th:id="'removeBtn' + ${item.id}" role="button" tabindex="0" class="material-icons"
+                              th:onclick="'deleteItem(' + ${item.id} + ')'">remove_circle_outline</span>
+                        <span th:id="'expandBtn' + ${item.id}" role="button" tabindex="0" class="material-icons"
+                              onclick="toggleInfo(this)">arrow_forward_ios</span>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img th:src="@{${item.imageSources[0]}}" th:alt="${item.name}">
+                    </div>
+                </div>
+                <div class="photo-album">
+                    <ul>
+                        <li th:each="imageSource : ${item.imageSources}">
+                            <img th:src="@{${imageSource}}" th:alt="${item.name}" onclick="replaceImage(this)">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="product__info">
+            <div class="title">
+                <h5 th:text="${item.type} + ' ' + ${item.name}">Item name</h5>
+            </div>
+            <div class="price">
+                Br <span th:text="${item.price}">Item price</span>
+            </div>
+            <!--<div class="variant">
+                <h3>SELECT A COLOR</h3>
+                <ul>
+                    <li><img
+                            src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png"
+                            alt="green apple"></li>
+                    <li><img
+                            src="https://res.cloudinary.com/john-mantas/image/upload/v1537302752/codepen/delicious-apples/yellow-apple.png"
+                            alt="yellow apple"></li>
+                    <li><img
+                            src="https://res.cloudinary.com/john-mantas/image/upload/v1537302427/codepen/delicious-apples/orange-apple.png"
+                            alt="orange apple"></li>
+                    <li><img
+                            src="https://res.cloudinary.com/john-mantas/image/upload/v1537302285/codepen/delicious-apples/red-apple.png"
+                            alt="red apple"></li>
+                </ul>
+            </div>-->
+            <div class="description">
+                <h3>BENEFITS</h3>
+                <ul>
+                    <li>Apples are nutricious</li>
+                    <li>Apples may be good for weight loss</li>
+                    <li>Apples may be good for bone health</li>
+                    <li>They're linked to a lowest risk of diabetes</li>
+                </ul>
+            </div>
+            <button class="buy--btn">ADD TO CART</button>
+        </div>
+    </section>
+
+</div>
+
+<!--<div th:fragment="items" class="row clearfix">
+    <div th:each="item : ${clothing}" class="col-lg-3 col-sm-4 col-md-3 product-container">
+
+        <section th:each="item : ${clothing}" class="product">
+            <div class="product__photo">
+                <div class="photo-container">
+                    <div class="photo-main">
+                        <div class="controls">
+                            <span class="material-icons">share</span>
+                            <span id="expandBtn" role="button" tabindex="0" class="material-icons" onclick="toggleInfo(this)">arrow_forward_ios</span>
+                        </div>
+                        <img src="https://res.cloudinary.com/john-mantas/image/upload/v1537291846/codepen/delicious-apples/green-apple-with-slice.png"
+                             alt="green apple slice">
+                    </div>
+                    <div class="photo-album">
+                        <ul>
+                            <li><img
+                                    src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png"
+                                    alt="green apple"></li>
+                            <li><img
+                                    src="https://res.cloudinary.com/john-mantas/image/upload/v1537303532/codepen/delicious-apples/half-apple.png"
+                                    alt="half apple"></li>
+                            <li><img
+                                    src="https://res.cloudinary.com/john-mantas/image/upload/v1537303160/codepen/delicious-apples/green-apple-flipped.png"
+                                    alt="green apple"></li>
+                            <li><img
+                                    src="https://res.cloudinary.com/john-mantas/image/upload/v1537303708/codepen/delicious-apples/apple-top.png"
+                                    alt="apple top"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="product__info">
+                <div class="title">
+                    <h1>Delicious Apples</h1>
+                    <span>COD: 45999</span>
+                </div>
+                <div class="price">
+                    R$ <span>7.93</span>
+                </div>
+                <div class="variant">
+                    <h3>SELECT A COLOR</h3>
+                    <ul>
+                        <li><img
+                                src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png"
+                                alt="green apple"></li>
+                        <li><img
+                                src="https://res.cloudinary.com/john-mantas/image/upload/v1537302752/codepen/delicious-apples/yellow-apple.png"
+                                alt="yellow apple"></li>
+                        <li><img
+                                src="https://res.cloudinary.com/john-mantas/image/upload/v1537302427/codepen/delicious-apples/orange-apple.png"
+                                alt="orange apple"></li>
+                        <li><img
+                                src="https://res.cloudinary.com/john-mantas/image/upload/v1537302285/codepen/delicious-apples/red-apple.png"
+                                alt="red apple"></li>
+                    </ul>
+                </div>
+                <div class="description">
+                    <h3>BENEFITS</h3>
+                    <ul>
+                        <li>Apples are nutricious</li>
+                        <li>Apples may be good for weight loss</li>
+                        <li>Apples may be good for bone health</li>
+                        <li>They're linked to a lowest risk of diabetes</li>
+                    </ul>
+                </div>
+                <button class="buy&#45;&#45;btn">ADD TO CART</button>
+            </div>
+        </section>
+
+        &lt;!&ndash;<div class="prod-box">
+            <div class="prod-i">
+                <img th:src="@{${item.imageSources[0]}}" th:alt="${item.name}" />
+            </div>
+            <div class="prod-dit clearfix">
+                <div class="dit-t clearfix">
+                    <div class="left-ti">
+                        <h4><span th:text="${item.wardrobeItemType}"></span> <span th:text="${item.name}"></span></h4>
+                        <p>By <span>Beko</span> under <span>Lights</span></p>
+                    </div>
+                    <a href="#"><span th:text="${item.price}"></span><span> BYR</span></a>
+                </div>
+            </div>
+        </div>&ndash;&gt;
+    </div>
+    <div class="categories_link">
+        <a href="#">Browse all categories here</a>
+    </div>
+</div>-->
+</body>
+</html>

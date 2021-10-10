@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:fragment="modal" action="#" th:action="@{/admin/wardrobe}" th:object="${wardrobeItem}" method="post">
+    <div id="addModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add item</h5>
+                    <input type="hidden" name="imageSources" id="imageSources" value="">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="upload-wrapper">
+                       <!-- <div class="ways">
+                            <ul>
+                                <li class="active">
+                                    submit
+                                </li>
+                                <li>
+                                    discussion
+                                </li>
+                            </ul>
+                        </div>-->
+                        <div class="sections">
+                            <section class="active">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <label for="itemName" class="order-form-label">Item name</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <input required type="text" th:field="${wardrobeItem.name}" id="itemName"
+                                               class="order-form-input">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <label for="itemType" class="order-form-label">Item type:</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <select required th:field="${wardrobeItem.type}" class="form-control"
+                                                id="itemType">
+                                            <option value="DRESS">Dress</option>
+                                            <option value="SUIT">Suit</option>
+                                            <option value="PANTS">Pants</option>
+                                            <option value="BLOUSE">Blouse</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="itemColor" class="order-form-label">Color</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <select required th:field="${wardrobeItem.color.name}" class="form-control"
+                                                id="itemColor">
+                                            <option value="RED">Red</option>
+                                            <option value="YELLOW">Yellow</option>
+                                            <option value="BLUE">Blue</option>
+                                            <option value="BLACK">Black</option>
+                                            <option value="WHITE">White</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="itemPrice" class="order-form-label">Price</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <input th:field="${wardrobeItem.price}" id="itemPrice"
+                                               class="order-form-input">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="sizesBtn" class="order-form-label">Sizes</label>
+                                    </div>
+                                    <div class="col-12">
+                                        <button id="sizesBtn" data-toggle="dropdown"
+                                                class="btn btn-secondary dropdown-toggle">
+                                            Choose sizes<b class="caret"></b>
+                                        </button>
+                                        <ul class="dropdown-menu checkbox-menu allow-focus">
+                                            <li th:each="size: ${wardrobeItem.sizes}">
+                                                <label>
+                                                    <input th:name="${size}" type="checkbox">
+                                                    <span th:text=${size}></span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="images">
+                                    <div class="pic">
+                                        add
+                                    </div>
+                                </div>
+                            </section>
+                           <!-- <section>
+                                <input type="text" placeholder="Topic" id="topic"/>
+                                <textarea placeholder="something..." id="msg"></textarea>
+                            </section>-->
+                        </div>
+                        <footer>
+                            <ul>
+                                <li><span id="reset">reset</span></li>
+                                <li>
+                                    <button type="submit" id="btnSubmit"
+                                            class="btn btn-dark d-block mx-auto btn-submit">Submit
+                                    </button>
+                                </li>
+                            </ul>
+                        </footer>
+                    </div>
+                    <div class="notification"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>
